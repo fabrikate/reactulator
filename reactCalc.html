@@ -136,12 +136,13 @@
             math = num1 + num2;
           } else if (operator === '/') {
             math = num1 / num2;
-          } else if (operator === 'X') {
+          } else if (operator === 'X') { //FOUND BUG: Cannot multiply
             math = num1 * num2;
           } else {
             math = 'Error';
           }
-          this.setState({ value: math });
+          var next = math.toString();
+          this.setState({ value: next });
         }
       },
       render: function () {

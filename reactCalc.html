@@ -96,7 +96,9 @@
         return { value: '' };
       },
       handleChange: function (e) {
-        this.setState({ value: e.target.value});
+        console.log(e.target.value)
+        var nextState = e.target.value;
+        this.setState({ value: nextState });
       },
       handleClick: function (e) {
         if (this.state.value === 'Error') {
@@ -105,7 +107,14 @@
         var nextState = this.state.value + e.target.innerHTML;
         this.setState({ value: nextState})
         console.log(nextState);
-
+      },
+      handleKeyDown: function (e) {
+        if (e.which === 13) {
+          this.handleEnter();
+        }
+        if (e.which === 27) {
+          this.setState({ value: '' });
+        }
       },
       handleClear: function () {
         this.setState({value: ''});
@@ -116,18 +125,18 @@
           this.setState({value: 'Error'});
         } else {
           console.log(matches);
-          var num1, num2, operand, math;
+          var num1, num2, operator, math;
           num1 = parseInt(matches[1]);
           num2 = parseInt(matches[3]);
-          operand = matches[2];
-          console.log(num1, operand, num2);
-          if ( operand === '-' ) {
+          operator = matches[2];
+          console.log(num1, operator, num2);
+          if ( operator === '-' ) {
             math = num1 - num2;
-          } else if (operand === '+') {
+          } else if (operator === '+') {
             math = num1 + num2;
-          } else if (operand === '/') {
+          } else if (operator === '/') {
             math = num1 / num2;
-          } else if (operand === 'X') {
+          } else if (operator === 'X') {
             math = num1 * num2;
           } else {
             math = 'Error';
@@ -138,7 +147,11 @@
       render: function () {
         return <div id="calculator">
           <div id="screen-container">
-            <input id="screen" value={this.state.value} />
+            <input id="screen"
+            onChange={this.handleChange}
+            onKeyDown={this.handleKeyDown}
+            value={this.state.value}
+            />
           </div>
 
           <div id="button-container">
